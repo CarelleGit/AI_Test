@@ -4,35 +4,52 @@ using UnityEngine;
 
 public class Flocking : MonoBehaviour
 {
-    public Vector3 leaderOffset;
-    public Transform leader;
+    Vector3 cForce;
+    Vector3 aForce;
+    Vector3 sForce;
     Rigidbody rb;
-
     public float speed;
-
+    public float radius;
     // Use this for initialization
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-        leaderOffset = leader.position - transform.position;
+        rb.AddForce(Random.insideUnitCircle * 5);
     }
 
     // Update is called once per frame
     void Update()
     {
+        Vector3 cTarget = Vector3.zero;
+        Vector3 aDesire = Vector3.zero;
+        Vector3 sSum = Vector3.zero;
 
-        arrive(leaderOffset);
+        int hoodsize = 0;
+        Collider[] hood = Physics.OverlapSphere(transform.position, radius);
 
+        foreach(Collider T in hood)
+        {
+            var Flocker = T.GetComponent<Flocking>();
+            if(Flocker != null)
+            {
+                hoodsize++;
+                Rigidbody guyRb = T.GetComponent<Rigidbody>();
+
+                cTarget += Flocker.transform.position;
+                aDesire += guyRb.velocity;
+                sSum += (transform.position - T.transform.position) / radius;
+
+            }
+        }
+        cTarget /= hoodsize;
+        aDesire /= hoodsize;
+        sSum /= hoodsize;
+
+        cForce = (cTarget - transform.position).normalized * speed - rb.velocity;
+        aForce = aDesire.normalized * speed - rb.velocity;
+        sForce = sSum.normalized * speed - rb.velocity;
+
+        rb.AddForce((cForce + aForce + sForce).normalized * speed);
     }
-    private void arrive(Vector3 targetPos)
-    {
-        Vector3 targetY = targetPos;
-        targetY.y = transform.position.y;
-        Vector3 targetOffset = targetPos - transform.position;
-        float dist = Vector3.Distance(transform.position, targetPos);
-        float rampSpeed = speed * (targetOffset.magnitude / dist);
-        float clippedSpeed = Mathf.Min(rampSpeed, speed);
-        Vector3 desiredVelocity = (clippedSpeed / targetOffset.magnitude) * targetOffset;
-        rb.velocity = desiredVelocity;
-    }
+   
 }
