@@ -1,0 +1,21 @@
+fileFormatVersion: 2
+guid: 865b47929da10d645846d2b538f15406
+timeCreated: 1517422697
+licenseType: Free
+TrueTypeFontImporter:
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: Adobe Ming Std
+  fontNames:
+  - Adobe Ming Std
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
