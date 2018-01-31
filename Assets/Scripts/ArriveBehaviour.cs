@@ -24,4 +24,6 @@ public class ArriveBehaviour : MonoBehaviour
         Vector3 desiredVelocity = (clippedSpeed / targetOffset.magnitude) * targetOffset;
         rb.velocity = desiredVelocity;
     }
+
+  
 }

@@ -5,7 +5,7 @@ using UnityEngine;
 public class SeekBehaviour : MonoBehaviour
 {
 
-    Rigidbody rb;
+    //Rigidbody rb;
 
     Vector3 desiredVelocity;
 
@@ -14,7 +14,7 @@ public class SeekBehaviour : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        rb = GetComponent<Rigidbody>();
+        //rb = GetComponent<Rigidbody>();
     }
 
     // Update is called once per frame
@@ -22,6 +22,11 @@ public class SeekBehaviour : MonoBehaviour
     {
         desiredVelocity = speed * (target.position - transform.position).normalized;
 
-        rb.AddForce(desiredVelocity - rb.velocity);
+        //rb.AddForce(desiredVelocity - rb.velocity);
     }
+
+    public Vector3 returnTarget()
+    {
+        return target.position;
+            }
 }
